@@ -1,7 +1,12 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp.plugin)
+    alias(libs.plugins.hilt.plugin)
 }
 
 android {
@@ -19,8 +24,24 @@ android {
     }
 
     buildTypes {
+        buildFeatures.buildConfig = true
+        val properties = Properties()
+        properties.load(FileInputStream(rootProject.file("local.properties")))
+
+        debug {
+            buildConfigField(
+                "String",
+                "PANDASCORE_KEY",
+                "\'${properties.getProperty("PANDASCORE_KEY")}\""
+            )
+        }
         release {
-            isMinifyEnabled = false
+            buildConfigField(
+                "String",
+                "PANDASCORE_KEY",
+                "\'${properties.getProperty("PANDASCORE_KEY")}\""
+            )
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -49,6 +70,15 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    implementation(libs.coil)
+    implementation(libs.retrofit)
+    implementation(libs.okhttp.logging)
+    implementation(libs.retrofit.gson)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
