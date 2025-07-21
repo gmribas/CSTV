@@ -1,5 +1,15 @@
 package com.gmribas.cstv.data.model
 
+import com.gmribas.cstv.data.model.Game
+import com.gmribas.cstv.data.model.League
+import com.gmribas.cstv.data.model.Live
+import com.gmribas.cstv.data.model.Opponent
+import com.gmribas.cstv.data.model.Player
+import com.gmribas.cstv.data.model.Serie
+import com.gmribas.cstv.data.model.StreamsList
+import com.gmribas.cstv.data.model.Tournament
+import com.gmribas.cstv.data.model.Videogame
+import com.gmribas.cstv.data.model.VideogameTitle
 import com.google.gson.annotations.SerializedName
 
 data class MatchResponse(

@@ -32,14 +32,14 @@ android {
             buildConfigField(
                 "String",
                 "PANDASCORE_KEY",
-                "\'${properties.getProperty("PANDASCORE_KEY")}\""
+                "\"${properties.getProperty("PANDASCORE_KEY")}\""
             )
         }
         release {
             buildConfigField(
                 "String",
                 "PANDASCORE_KEY",
-                "\'${properties.getProperty("PANDASCORE_KEY")}\""
+                "\"${properties.getProperty("PANDASCORE_KEY")}\""
             )
             isMinifyEnabled = true
             proguardFiles(
@@ -52,9 +52,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+    compileOptions.sourceCompatibility = JavaVersion.VERSION_11
+    compileOptions.targetCompatibility = JavaVersion.VERSION_11
+
     buildFeatures {
         compose = true
     }
@@ -77,7 +77,6 @@ dependencies {
     implementation(libs.retrofit.gson)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

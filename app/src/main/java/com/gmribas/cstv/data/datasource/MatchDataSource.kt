@@ -7,7 +7,11 @@ class MatchDataSource(
     private val api: PandascoreApi
 ) : IMatchDataSource {
 
-    override suspend fun getMatches(beginAt: String): MatchResponse {
-        return api.getMatches(beginAt)
+    override suspend fun getMatches(beginAt: String, page: Int): List<MatchResponse> {
+        return api.getMatches(beginAt, page)
+    }
+
+    override suspend fun getMatch(slug: String): MatchResponse {
+        return api.getMatch(slug)
     }
 }

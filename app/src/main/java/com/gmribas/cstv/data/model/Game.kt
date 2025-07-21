@@ -1,5 +1,6 @@
 package com.gmribas.cstv.data.model
 
+import com.gmribas.cstv.data.model.Winner
 import com.google.gson.annotations.SerializedName
 
 data class Game(
