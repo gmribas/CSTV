@@ -9,7 +9,7 @@ class MatchMapper : IMapper<MatchResponse, MatchResponseDTO> {
     override fun toDTO(model: MatchResponse): MatchResponseDTO {
         return MatchResponseDTO(
             slug = model.slug,
-            league = model.league,
+            league = model.league.name,
             serie = model.serie.name,
 //            teamA = ,
 //            teamB =

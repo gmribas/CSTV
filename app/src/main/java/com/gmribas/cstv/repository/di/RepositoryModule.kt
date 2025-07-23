@@ -22,7 +22,7 @@ object RepositoryModule {
     @Provides
     fun provideMatchRepository(
         datasource: IMatchDataSource,
-        mapper: IMapper<MatchResponse, MatchResponseDTO>
+        mapper: @JvmSuppressWildcards IMapper<MatchResponse, MatchResponseDTO>
     ): IMatchRepository {
         return MatchRepository(datasource, mapper)
     }

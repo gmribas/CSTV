@@ -34,12 +34,12 @@ object NetworkModule {
         .build()
 
     @Provides
-    fun provideOkHttpBuilder(
+    fun provideOkHttpClient(
         authInterceptor: AuthInterceptor,
-    ) = OkHttpClient.Builder().apply {
+    ): OkHttpClient = OkHttpClient.Builder().apply {
         addInterceptor(HttpLoggingInterceptor())
         addInterceptor(authInterceptor)
-    }
+    }.build()
 
     @Provides
     fun provideNetworkCallAdapterFactory(): CallAdapter.Factory = NetworkCallAdapterFactory()

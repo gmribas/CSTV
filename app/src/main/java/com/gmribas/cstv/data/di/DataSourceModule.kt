@@ -1,5 +1,6 @@
 package com.gmribas.cstv.data.di
 
+import com.gmribas.cstv.data.datasource.IMatchDataSource
 import com.gmribas.cstv.data.datasource.MatchDataSource
 import com.gmribas.cstv.data.api.PandascoreApi
 import dagger.Module
@@ -12,5 +13,5 @@ import dagger.hilt.components.SingletonComponent
 class DataSourceModule {
 
     @Provides
-    fun provideIMatchDataSource(pandascoreApi: PandascoreApi) = MatchDataSource(pandascoreApi)
+    fun provideIMatchDataSource(pandascoreApi: PandascoreApi): IMatchDataSource = MatchDataSource(pandascoreApi)
 }
