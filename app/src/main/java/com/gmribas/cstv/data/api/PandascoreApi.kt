@@ -9,11 +9,11 @@ interface PandascoreApi {
 
     @GET("csgo/matches")
     suspend fun getMatches(
-        @Query("begin_at") beginAt: String,
+        @Query("begin_at") beginAt: String?,
         @Query("page") page: Int = 0,
     ): List<MatchResponse>
 
-    @GET("csgo/matches")
+    @GET("csgo/matches/{match_id_or_slug}")
     suspend fun getMatch(
         @Path("match_id_or_slug") idOrSlug: String,
     ): MatchResponse
