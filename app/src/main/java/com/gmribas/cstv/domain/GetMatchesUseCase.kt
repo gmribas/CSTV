@@ -1,6 +1,6 @@
 package com.gmribas.cstv.domain
 
-import com.gmribas.cstv.repository.IMatchRepository
+import com.gmribas.cstv.repository.match.IMatchRepository
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
 import javax.inject.Inject
 

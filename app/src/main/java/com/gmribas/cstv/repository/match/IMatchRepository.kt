@@ -1,4 +1,4 @@
-package com.gmribas.cstv.repository
+package com.gmribas.cstv.repository.match
 
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
 
