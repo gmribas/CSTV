@@ -11,8 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import com.gmribas.cstv.core.extensions.getTodayAsIsoString
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,7 +26,7 @@ class MatchesScreenViewModel @Inject constructor(
         try {
             _state.value = MatchesScreenState.MatchesScreenLoadingState
 
-            val today = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+            val today = getTodayAsIsoString()
 
             val result = getMatchesUseCase(beginAt = today, page = 1)
 

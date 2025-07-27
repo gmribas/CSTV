@@ -1,12 +1,12 @@
 package com.gmribas.cstv.repository.mapper
 
 import com.gmribas.cstv.core.IMapper
-import com.gmribas.cstv.data.model.Player
+import com.gmribas.cstv.data.model.Team
 import com.gmribas.cstv.repository.dto.TeamDTO
 
-class TeamMapper : IMapper<Player, TeamDTO> {
+class TeamToTeamDTOMapper : IMapper<Team, TeamDTO> {
 
-    override fun toDTO(model: Player): TeamDTO {
+    override fun toDTO(model: Team): TeamDTO {
         return TeamDTO(
             id = model.id,
             name = model.name,
