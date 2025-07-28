@@ -1,5 +1,6 @@
 package com.gmribas.cstv.ui.matchdetails
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gmribas.cstv.domain.GetMatchOpponentsUseCase
@@ -51,10 +52,12 @@ class MatchDetailsScreenViewModel @Inject constructor(
                 }
 
                 is UseCaseResult.Error -> {
+                    Log.e("MatchDetailsViewModel", "Failed to load match opponents", opponentsResult.error)
                     _state.value = MatchDetailsScreenState.MatchDetailsScreenErrorState(opponentsResult.error.message)
                 }
             }
         } catch (e: Exception) {
+            Log.e("MatchDetailsViewModel", "Exception in loadMatchOpponents", e)
             _state.value = MatchDetailsScreenState.MatchDetailsScreenErrorState(e.message)
         }
     }

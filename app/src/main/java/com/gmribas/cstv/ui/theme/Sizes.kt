@@ -12,6 +12,7 @@ val SIZE_36 = 36.dp
 val SIZE_48 = 48.dp
 val SIZE_52 = 52.dp
 val SIZE_64 = 64.dp
+val SIZE_72 = 72.dp
 val SIZE_190 = 190.dp
 
 val SPACING_4 = 4.dp

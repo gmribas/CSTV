@@ -12,10 +12,11 @@ import androidx.navigation.navArgument
 import androidx.navigation.NavType
 import com.gmribas.cstv.ui.matchdetails.MatchDetailsScreen
 import com.gmribas.cstv.ui.matchdetails.MatchDetailsScreenViewModel
-import com.gmribas.cstv.ui.matches.MatchesScreen
-import com.gmribas.cstv.ui.matches.MatchesScreenViewModel
-import com.google.gson.Gson
+import com.gmribas.cstv.ui.matches.MatchesListScreen
+import com.gmribas.cstv.ui.matches.MatchesListScreenViewModel
+import com.gmribas.cstv.ui.splash.SplashScreen
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
+import com.google.gson.Gson
 
 @Composable
 fun CstvNavigation(
@@ -25,15 +26,25 @@ fun CstvNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Matches.route,
+        startDestination = Screen.Splash.route,
         modifier = modifier
     ) {
+        composable(route = Screen.Splash.route) {
+            SplashScreen(
+                onSplashFinished = {
+                    navController.navigate(Screen.Matches.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+        
         composable(route = Screen.Matches.route) {
-            val viewModel: MatchesScreenViewModel = hiltViewModel()
+            val viewModel: MatchesListScreenViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
             val gson = Gson()
             
-            MatchesScreen(
+            MatchesListScreen(
                 state = state,
                 onEvent = viewModel::onEvent,
                 onItemClick = { match ->

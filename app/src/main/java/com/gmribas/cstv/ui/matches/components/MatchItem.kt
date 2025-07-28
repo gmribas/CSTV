@@ -26,15 +26,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.gmribas.cstv.R
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
-import com.gmribas.cstv.repository.dto.TeamDTO
-import com.gmribas.cstv.ui.common.CustomImage
+import com.gmribas.cstv.ui.common.TeamColumn
 import com.gmribas.cstv.ui.theme.AccentRed
 import com.gmribas.cstv.ui.theme.CardBackground
 import com.gmribas.cstv.ui.theme.SIZE_0
@@ -42,8 +39,6 @@ import com.gmribas.cstv.ui.theme.SIZE_4
 import com.gmribas.cstv.ui.theme.SIZE_8
 import com.gmribas.cstv.ui.theme.SIZE_12
 import com.gmribas.cstv.ui.theme.SIZE_16
-import com.gmribas.cstv.ui.theme.SIZE_48
-import com.gmribas.cstv.ui.theme.SIZE_64
 import com.gmribas.cstv.ui.theme.SIZE_190
 import com.gmribas.cstv.ui.theme.SPACING_4
 import com.gmribas.cstv.ui.theme.SPACING_8
@@ -173,30 +168,5 @@ fun DateTag(
                 style = MaterialTheme.typography.labelSmall
             )
         }
-    }
-}
-
-@Composable
-fun TeamColumn(team: TeamDTO?, modifier: Modifier = Modifier) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.width(SIZE_64)
-    ) {
-        CustomImage(
-            imageUrl = team?.imageUrl,
-            teamName = team?.name,
-            size = SIZE_48
-        )
-
-        Spacer(modifier = Modifier.height(SIZE_8))
-
-        Text(
-            text = team?.name ?: stringResource(R.string.team_placeholder),
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Center,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            color = Color.White
-        )
     }
 }

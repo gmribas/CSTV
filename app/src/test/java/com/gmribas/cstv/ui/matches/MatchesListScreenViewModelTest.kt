@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import com.gmribas.cstv.domain.GetMatchesUseCase
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
 import com.gmribas.cstv.ui.matches.model.MatchScreenEvent
-import com.gmribas.cstv.ui.matches.model.MatchesScreenState
+import com.gmribas.cstv.ui.matches.model.MatchesListScreenState
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -19,9 +19,9 @@ import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MatchesScreenViewModelTest {
+class MatchesListScreenViewModelTest {
 
-    private lateinit var viewModel: MatchesScreenViewModel
+    private lateinit var viewModel: MatchesListScreenViewModel
     private lateinit var getMatchesUseCase: GetMatchesUseCase
     private lateinit var dispatcher: TestDispatcher
 
@@ -32,7 +32,7 @@ class MatchesScreenViewModelTest {
         Dispatchers.setMain(dispatcher)
         
         every { getMatchesUseCase() } returns flowOf(PagingData.empty())
-        viewModel = MatchesScreenViewModel(getMatchesUseCase)
+        viewModel = MatchesListScreenViewModel(getMatchesUseCase)
     }
 
     @Test
@@ -41,9 +41,7 @@ class MatchesScreenViewModelTest {
         val initialState = viewModel.state.value
 
         // When & Then
-        assert(initialState is MatchesScreenState.MatchesScreenSuccessState)
-        val successState = initialState as MatchesScreenState.MatchesScreenSuccessState
-        assert(successState.matchesPagingFlow != null)
+        assert(initialState is MatchesListScreenState.MatchesScreenSuccessState)
     }
 
     @Test

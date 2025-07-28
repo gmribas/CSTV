@@ -1,5 +1,6 @@
 package com.gmribas.cstv.data.paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.gmribas.cstv.data.datasource.match.IMatchDataSource
@@ -23,6 +24,7 @@ class MatchesPagingSource(
                 nextKey = if (matches.isEmpty()) null else page + 1
             )
         } catch (exception: Exception) {
+            Log.e("MatchesPagingSource", "Failed to load matches for page: $page", exception)
             LoadResult.Error(exception)
         }
     }

@@ -24,7 +24,7 @@ fun SplashScreen(
     modifier: Modifier = Modifier
 ) {
     LaunchedEffect(Unit) {
-        delay(2000)
+        delay(1000)
         onSplashFinished()
     }
 

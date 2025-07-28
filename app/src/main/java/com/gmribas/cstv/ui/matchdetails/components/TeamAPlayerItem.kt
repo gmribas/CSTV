@@ -71,7 +71,9 @@ fun TeamAPlayerItem(
                     text = player.name.orEmpty(),
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
                 
                 Spacer(modifier = Modifier.height(SPACING_4))
@@ -86,16 +88,18 @@ fun TeamAPlayerItem(
                 )
             }
             
-            CustomImage(
-                imageUrl = player.imageUrl,
-                teamName = player.name,
-                size = SIZE_48,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .offset(y = -SPACING_4)
-                    .padding(end = SPACING_8),
-                clipShape = RoundedCornerShape(SIZE_4)
-            )
+            player.imageUrl?.takeIf { it.isNotBlank() }?.let { imageUrl ->
+                CustomImage(
+                    imageUrl = imageUrl,
+                    teamName = player.name,
+                    size = SIZE_48,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .offset(y = -SPACING_4)
+                        .padding(end = SPACING_8),
+                    clipShape = RoundedCornerShape(SIZE_4)
+                )
+            }
         }
     }
 }

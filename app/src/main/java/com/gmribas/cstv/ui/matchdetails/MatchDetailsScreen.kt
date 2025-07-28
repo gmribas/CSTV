@@ -32,18 +32,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.gmribas.cstv.R
 import com.gmribas.cstv.repository.dto.MatchOpponentsResponseDTO
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
-import com.gmribas.cstv.repository.dto.TeamDTO
 import com.gmribas.cstv.ui.common.ErrorContent
 import com.gmribas.cstv.ui.common.LoadingContent
 import com.gmribas.cstv.ui.matchdetails.model.MatchDetailsScreenState
 import com.gmribas.cstv.ui.matchdetails.model.MatchDetailsScreenEvent
 import com.gmribas.cstv.ui.matchdetails.components.TeamAPlayerItem
 import com.gmribas.cstv.ui.matchdetails.components.TeamBPlayerItem
-import com.gmribas.cstv.ui.matches.components.TeamColumn
+import com.gmribas.cstv.ui.common.TeamColumn
 import com.gmribas.cstv.ui.theme.SPACING_8
 import com.gmribas.cstv.ui.theme.SPACING_16
 
@@ -167,13 +165,12 @@ private fun MatchDetailsContent(
 
 @Composable
 private fun MatchHeaderCard(matchDetails: MatchResponseDTO) {
-    
-        Column(
-            modifier = Modifier
+    Column(
+        modifier = Modifier
             .fillMaxWidth()
             .padding(SPACING_16),
-            verticalArrangement = Arrangement.spacedBy(SPACING_8)
-        ) {
+        verticalArrangement = Arrangement.spacedBy(SPACING_8)
+    ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,

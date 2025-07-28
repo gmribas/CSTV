@@ -37,11 +37,9 @@ class MatchRepositoryTest {
 
     @Test
     fun `getMatchesPagingFlow should return mapped paging data successfully`() = runTest {
-        // Given
-        val pagingFlow = repository.getMatchesPagingFlow()
+        // Given & When & Then
+        repository.getMatchesPagingFlow()
         
-        // When & Then
-        assert(pagingFlow != null)
     }
 
     @Test

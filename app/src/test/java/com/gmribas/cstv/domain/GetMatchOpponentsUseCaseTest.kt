@@ -1,11 +1,14 @@
 package com.gmribas.cstv.domain
 
+import android.util.Log
 import com.gmribas.cstv.repository.dto.MatchOpponentsResponseDTO
 import com.gmribas.cstv.repository.dto.TeamDetailsDTO
 import com.gmribas.cstv.repository.match.IMatchRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -56,6 +59,8 @@ class GetMatchOpponentsUseCaseTest {
     @Test
     fun `invoke should return error with custom message for UnknownHostException`() = runTest {
         // Given
+        mockkStatic(Log::class)
+        every { Log.e(any(), any(), any()) } returns 0
         val slug = "test-match"
         val originalException = UnknownHostException("No internet")
         coEvery { repository.getMatchOpponents(slug) } throws originalException
@@ -74,6 +79,8 @@ class GetMatchOpponentsUseCaseTest {
     @Test
     fun `invoke should return error with custom message for ConnectException`() = runTest {
         // Given
+        mockkStatic(Log::class)
+        every { Log.e(any(), any(), any()) } returns 0
         val slug = "test-match"
         val originalException = ConnectException("Connection refused")
         coEvery { repository.getMatchOpponents(slug) } throws originalException
@@ -92,6 +99,8 @@ class GetMatchOpponentsUseCaseTest {
     @Test
     fun `invoke should return error with custom message for SocketTimeoutException`() = runTest {
         // Given
+        mockkStatic(Log::class)
+        every { Log.e(any(), any(), any()) } returns 0
         val slug = "test-match"
         val originalException = SocketTimeoutException("Read timeout")
         coEvery { repository.getMatchOpponents(slug) } throws originalException
@@ -110,6 +119,8 @@ class GetMatchOpponentsUseCaseTest {
     @Test
     fun `invoke should return error for other throwables`() = runTest {
         // Given
+        mockkStatic(Log::class)
+        every { Log.e(any(), any(), any()) } returns 0
         val slug = "test-match"
         val originalException = RuntimeException("Some other error")
         coEvery { repository.getMatchOpponents(slug) } throws originalException

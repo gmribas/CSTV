@@ -1,5 +1,6 @@
 package com.gmribas.cstv.ui.matchdetails
 
+import android.util.Log
 import app.cash.turbine.test
 import com.gmribas.cstv.domain.GetMatchOpponentsUseCase
 import com.gmribas.cstv.domain.UseCaseResult
@@ -12,6 +13,7 @@ import com.google.gson.Gson
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -83,11 +85,15 @@ class MatchDetailsScreenViewModelTest {
     @Test
     fun `onEvent LoadMatchOpponents should update state to error on failure`() = runTest {
         // Given
+        mockkStatic(Log::class)
+        every { Log.e(any(), any(), any()) } returns 0
         val matchDataJson = "{\"slug\":\"match1\",\"league\":\"league1\",\"serie\":\"serie1\",\"teamA\":null,\"teamB\":null,\"status\":\"running\",\"beginAt\":\"2024-01-01T10:00:00Z\",\"leagueImageUrl\":null,\"isLive\":true,\"formattedDateLabel\":null}"
         val slug = "test-match"
         val errorMessage = "Network error"
         val exception = Exception(errorMessage)
+        val matchResponse = MatchResponseDTO("match1", "league1", "serie1", null, null, "running", "2024-01-01T10:00:00Z", null, true, null)
 
+        every { gson.fromJson(matchDataJson, MatchResponseDTO::class.java) } returns matchResponse
         coEvery { getMatchOpponentsUseCase(slug) } returns UseCaseResult.Error(exception)
 
         // When
@@ -110,6 +116,8 @@ class MatchDetailsScreenViewModelTest {
     @Test
     fun `onEvent LoadMatchOpponents should handle JSON parsing exception`() = runTest {
         // Given
+        mockkStatic(Log::class)
+        every { Log.e(any(), any(), any()) } returns 0
         val invalidMatchDataJson = "invalid json"
         val slug = "test-match"
 
