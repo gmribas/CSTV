@@ -24,6 +24,13 @@ val RobotoFontFamily = FontFamily(
 )
 
 val Typography = Typography(
+    displayMedium = TextStyle(
+        fontFamily = RobotoFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = FONT_SIZE_32,
+        lineHeight = LINE_HEIGHT_40,
+        letterSpacing = LETTER_SPACING_0
+    ),
     headlineLarge = TextStyle(
         fontFamily = RobotoFontFamily,
         fontWeight = FontWeight.Bold,
@@ -38,6 +45,13 @@ val Typography = Typography(
         lineHeight = LINE_HEIGHT_28,
         letterSpacing = LETTER_SPACING_0
     ),
+    headlineSmall = TextStyle(
+        fontFamily = RobotoFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = FONT_SIZE_18,
+        lineHeight = LINE_HEIGHT_24,
+        letterSpacing = LETTER_SPACING_0
+    ),
     bodyLarge = TextStyle(
         fontFamily = RobotoFontFamily,
         fontWeight = FontWeight.Normal,
@@ -47,30 +61,51 @@ val Typography = Typography(
     ),
     bodyMedium = TextStyle(
         fontFamily = RobotoFontFamily,
-        fontWeight = FontWeight.Medium,
-        fontSize = FONT_SIZE_13,
-        lineHeight = LINE_HEIGHT_24,
-        letterSpacing = LETTER_SPACING_0_5
+        fontWeight = FontWeight.Normal,
+        fontSize = FONT_SIZE_12,
+        lineHeight = LINE_HEIGHT_12,
+        letterSpacing = LETTER_SPACING_0
     ),
     bodySmall = TextStyle(
         fontFamily = RobotoFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = FONT_SIZE_11,
-        lineHeight = LINE_HEIGHT_16,
-        letterSpacing = LETTER_SPACING_0_5
+        fontSize = FONT_SIZE_8,
+        lineHeight = LINE_HEIGHT_8,
+        letterSpacing = LETTER_SPACING_0
     ),
-    labelSmall = TextStyle(
+    titleLarge = TextStyle(
         fontFamily = RobotoFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = FONT_SIZE_10,
-        lineHeight = LINE_HEIGHT_16,
-        letterSpacing = LETTER_SPACING_0_5
+        fontSize = FONT_SIZE_14,
+        lineHeight = LINE_HEIGHT_14,
+        letterSpacing = LETTER_SPACING_0
     ),
     titleMedium = TextStyle(
         fontFamily = RobotoFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = FONT_SIZE_16,
         lineHeight = LINE_HEIGHT_24,
+        letterSpacing = LETTER_SPACING_0
+    ),
+    titleSmall = TextStyle(
+        fontFamily = RobotoFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = FONT_SIZE_12,
+        lineHeight = LINE_HEIGHT_12,
+        letterSpacing = LETTER_SPACING_0
+    ),
+    labelMedium = TextStyle(
+        fontFamily = RobotoFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = FONT_SIZE_12,
+        lineHeight = LINE_HEIGHT_12,
+        letterSpacing = LETTER_SPACING_0
+    ),
+    labelSmall = TextStyle(
+        fontFamily = RobotoFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = FONT_SIZE_10,
+        lineHeight = LINE_HEIGHT_10,
         letterSpacing = LETTER_SPACING_0
     )
 )

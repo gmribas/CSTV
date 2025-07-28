@@ -74,10 +74,11 @@ fun MatchDetailsScreen(
             title = {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onBackground,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center
                 )
             },
             navigationIcon = {
@@ -181,7 +182,7 @@ private fun MatchHeaderCard(matchDetails: MatchResponseDTO) {
                 TeamColumn(team = matchDetails.teamA)
                 Text(
                     text = stringResource(R.string.versus_text),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 TeamColumn(team = matchDetails.teamB)
@@ -191,7 +192,7 @@ private fun MatchHeaderCard(matchDetails: MatchResponseDTO) {
 
             Text(
                 text = matchDetails.formattedDateLabel.orEmpty(),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()

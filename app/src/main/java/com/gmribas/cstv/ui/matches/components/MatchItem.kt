@@ -44,8 +44,8 @@ import com.gmribas.cstv.ui.theme.SIZE_12
 import com.gmribas.cstv.ui.theme.SIZE_16
 import com.gmribas.cstv.ui.theme.SIZE_48
 import com.gmribas.cstv.ui.theme.SIZE_64
+import com.gmribas.cstv.ui.theme.SIZE_190
 import com.gmribas.cstv.ui.theme.SPACING_4
-import com.gmribas.cstv.ui.theme.SPACING_6
 import com.gmribas.cstv.ui.theme.SPACING_8
 import com.gmribas.cstv.ui.theme.SPACING_16
 import com.gmribas.cstv.ui.theme.TextSecondary
@@ -59,7 +59,7 @@ fun MatchItem(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(210.dp),
+            .height(SIZE_190),
         elevation = CardDefaults.cardElevation(defaultElevation = SIZE_4),
         colors = CardDefaults.cardColors(
             contentColor = MaterialTheme.colorScheme.onSurface,
@@ -86,7 +86,7 @@ fun MatchItem(
 
                 Text(
                     text = stringResource(R.string.versus_text),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = SPACING_16)
                 )
@@ -131,7 +131,7 @@ fun MatchItem(
                     Text(
                         text = "${match.league} ${stringResource(R.string.league_separator)} ${match.serie}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = Color.White,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -158,13 +158,13 @@ fun DateTag(
                     bottomEnd = SIZE_0
                 )
             )
-            .padding(horizontal = SPACING_8, vertical = SPACING_6)
+            .padding(horizontal = SPACING_8, vertical = SPACING_4)
     ) {
         if (match.isLive != true) {
             Text(
                 text = match.formattedDateLabel.orEmpty(),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.White
             )
         } else {
             Text(
@@ -192,10 +192,11 @@ fun TeamColumn(team: TeamDTO?, modifier: Modifier = Modifier) {
 
         Text(
             text = team?.name ?: stringResource(R.string.team_placeholder),
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            color = Color.White
         )
     }
 }

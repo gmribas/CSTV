@@ -50,9 +50,10 @@ fun MatchesScreen(
         onEvent(MatchScreenEvent.LoadRecentMatches)
     }
     
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.background)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Row(
@@ -63,7 +64,7 @@ fun MatchesScreen(
             ) {
                 Text(
                     text = stringResource(R.string.matches_title),
-                    style = MaterialTheme.typography.headlineMedium,
+                    style = MaterialTheme.typography.displayMedium,
                     color = MaterialTheme.colorScheme.onBackground
                 )
             }
@@ -107,43 +108,29 @@ fun MatchesScreen(
                         when {
                             loadState.refresh is LoadState.Loading -> {
                                 item {
-                                    Box(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        CircularProgressIndicator(color = AccentRed)
-                                    }
+                                    LoadingContent(modifier = Modifier.fillMaxSize())
                                 }
                             }
                             loadState.append is LoadState.Loading -> {
                                 item {
-                                    Box(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        CircularProgressIndicator(color = AccentRed)
-                                    }
+                                    LoadingContent(modifier = Modifier.fillMaxSize())
                                 }
                             }
                             loadState.refresh is LoadState.Error -> {
                                 val error = loadState.refresh as LoadState.Error
                                 item {
-                                    Text(
-                                        text = stringResource(R.string.error_prefix) + error.error.localizedMessage,
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.error,
-                                        modifier = Modifier.padding(SPACING_16)
+                                    ErrorContent(
+                                        error = stringResource(R.string.error_prefix) + error.error.localizedMessage,
+                                        modifier = Modifier.fillMaxSize()
                                     )
                                 }
                             }
                             loadState.append is LoadState.Error -> {
                                 val error = loadState.append as LoadState.Error
                                 item {
-                                    Text(
-                                        text = stringResource(R.string.error_prefix) + error.error.localizedMessage,
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.error,
-                                        modifier = Modifier.padding(SPACING_16)
+                                    ErrorContent(
+                                        error = stringResource(R.string.error_prefix) + error.error.localizedMessage,
+                                        modifier = Modifier.fillMaxSize()
                                     )
                                 }
                             }
@@ -152,18 +139,7 @@ fun MatchesScreen(
                 }
             }
             
-            is MatchesScreenState.MatchesScreenIdleState -> {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = stringResource(R.string.welcome_message),
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(SPACING_16)
-                    )
-                }
-            }
+            is MatchesScreenState.MatchesScreenIdleState -> {}
             }
         }
     }
