@@ -7,9 +7,13 @@ class MatchDataSource(
     private val api: PandascoreApi
 ) : IMatchDataSource {
 
+    companion object {
+        const val PAGE_SIZE = 25
+    }
+
     override suspend fun getOrderedMatches(beginAt: String, page: Int): List<MatchResponse> {
-        val runningMatches = api.getRunningMatches(page = 1, perPage = 20)
-        val upcomingMatches = api.getUpcomingMatches(page = 1, perPage = 30)
+        val runningMatches = api.getRunningMatches(page = page, perPage = PAGE_SIZE)
+        val upcomingMatches = api.getUpcomingMatches(page = page, perPage = PAGE_SIZE)
         
         val allMatches = (runningMatches + upcomingMatches)
         

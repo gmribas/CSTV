@@ -1,10 +1,17 @@
 package com.gmribas.cstv.repository.match
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import com.gmribas.cstv.core.IMapper
 import com.gmribas.cstv.data.datasource.match.IMatchDataSource
 import com.gmribas.cstv.data.datasource.team.ITeamDataSource
 import com.gmribas.cstv.data.model.MatchDetailsResponse
 import com.gmribas.cstv.data.model.MatchResponse
+import com.gmribas.cstv.data.paging.MatchesPagingSource
 import com.gmribas.cstv.repository.dto.MatchDetailsResponseDTO
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
 
@@ -15,11 +22,18 @@ class MatchRepository(
     private val matchDetailsMapper: IMapper<MatchDetailsResponse, MatchDetailsResponseDTO>
 ) : IMatchRepository {
 
-    override suspend fun getMatches(
-        beginAt: String,
-        page: Int
-    ): List<MatchResponseDTO> {
-        return datasource.getOrderedMatches(beginAt, page).map(mapper::toDTO)
+    override fun getMatchesPagingFlow(): Flow<PagingData<MatchResponseDTO>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { MatchesPagingSource(datasource) }
+        ).flow.map { pagingData ->
+            pagingData.map { matchResponse ->
+                mapper.toDTO(matchResponse)
+            }
+        }
     }
     
     override suspend fun getMatchDetails(slug: String): MatchDetailsResponseDTO {

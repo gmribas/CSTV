@@ -1,4 +1,4 @@
-package com.gmribas.cstv.ui.matches.components
+package com.gmribas.cstv.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

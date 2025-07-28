@@ -11,6 +11,12 @@ class GetMatchDetailsUseCase @Inject constructor(
     suspend operator fun invoke(slug: String): UseCaseResult<MatchDetailsResponseDTO> {
         return try {
             UseCaseResult.Success(repository.getMatchDetails(slug))
+        } catch (e: java.net.UnknownHostException) {
+            UseCaseResult.Error(Exception("Network connection failed. Please check your internet connection.", e))
+        } catch (e: java.net.ConnectException) {
+            UseCaseResult.Error(Exception("Could not connect to server. Please try again later.", e))
+        } catch (e: java.net.SocketTimeoutException) {
+            UseCaseResult.Error(Exception("Connection timeout. Please try again.", e))
         } catch (e: Throwable) {
             UseCaseResult.Error(e)
         }

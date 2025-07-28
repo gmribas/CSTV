@@ -1,11 +1,11 @@
 package com.gmribas.cstv.ui.matches.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,25 +27,27 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.gmribas.cstv.R
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
+import com.gmribas.cstv.repository.dto.TeamDTO
+import com.gmribas.cstv.ui.common.CustomImage
 import com.gmribas.cstv.ui.theme.AccentRed
 import com.gmribas.cstv.ui.theme.CardBackground
+import com.gmribas.cstv.ui.theme.SIZE_0
 import com.gmribas.cstv.ui.theme.SIZE_4
 import com.gmribas.cstv.ui.theme.SIZE_8
 import com.gmribas.cstv.ui.theme.SIZE_12
 import com.gmribas.cstv.ui.theme.SIZE_16
-import com.gmribas.cstv.ui.theme.SIZE_24
+import com.gmribas.cstv.ui.theme.SIZE_48
+import com.gmribas.cstv.ui.theme.SIZE_64
 import com.gmribas.cstv.ui.theme.SPACING_6
 import com.gmribas.cstv.ui.theme.SPACING_8
-import com.gmribas.cstv.ui.theme.SPACING_12
 import com.gmribas.cstv.ui.theme.SPACING_16
 import com.gmribas.cstv.ui.theme.TextSecondary
-import com.gmribas.cstv.ui.theme.TextTertiary
 
 @Composable
 fun MatchItem(
@@ -55,7 +58,7 @@ fun MatchItem(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = SPACING_16, vertical = SPACING_8),
+            .height(210.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = SIZE_4),
         colors = CardDefaults.cardColors(
             contentColor = MaterialTheme.colorScheme.onSurface,
@@ -63,111 +66,141 @@ fun MatchItem(
         ),
         shape = RoundedCornerShape(SIZE_12)
     ) {
-        Box {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            DateTag(
+                modifier = Modifier.align(Alignment.TopEnd),
+                match = match
+            )
+
+            // Teams row in center
+            Row(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                // horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TeamColumn(
+                    team = match.teamA,
+                    // modifier = Modifier.weight(1f)
+                )
+
+                Text(
+                    text = stringResource(R.string.versus_text),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = SPACING_16)
+                )
+
+                TeamColumn(
+                    team = match.teamB,
+                    // modifier = Modifier.weight(1f)
+                )
+            }
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(SPACING_16)
-                    .background(Color.Transparent)
+                    .align(Alignment.BottomStart)
             ) {
+                // Divider at bottom
+                HorizontalDivider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = SPACING_4),
+                    color = MaterialTheme.colorScheme.outlineVariant
+                )
+
+                // League info row at bottom
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    if (match.isLive) {
-                        Box(
-                            modifier = Modifier
-                                .background(
-                                    AccentRed,
-                                    shape = RoundedCornerShape(SIZE_16)
-                                )
-                                .padding(horizontal = SPACING_12, vertical = SPACING_6)
-                        ) {
-                            Text(
-                                text = stringResource(R.string.live_indicator),
-                                color = Color.White,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                        }
-                    } else {
-                        Text(
-                            text = match.formattedDateLabel,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-                
-                Spacer(modifier = Modifier.height(SIZE_16))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        CustomImage(match.teamA?.imageUrl, match.teamA?.name)
-
-                        Spacer(modifier = Modifier.height(SIZE_8))
-
-                        Text(
-                            text = match.teamA?.name ?: stringResource(R.string.team_placeholder),
-                            style = MaterialTheme.typography.bodyMedium,
-                            textAlign = TextAlign.Center,
-                            maxLines = 2
-                        )
-                    }
-                    
-                    Text(
-                        text = stringResource(R.string.versus_text),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(horizontal = SPACING_16)
-                    )
-                    
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        CustomImage(match.teamB?.imageUrl, match.teamB?.name)
-
-                        Spacer(modifier = Modifier.height(SIZE_8))
-
-                        Text(
-                            text = match.teamB?.name ?: stringResource(R.string.team_placeholder),
-                            style = MaterialTheme.typography.bodyMedium,
-                            textAlign = TextAlign.Center,
-                            maxLines = 2
-                        )
-                    }
-                }
-                
-                Spacer(modifier = Modifier.height(SIZE_16))
-                
-                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = SPACING_16, vertical = SPACING_8),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(match.leagueImageUrl)
                             .build(),
-                        contentDescription = stringResource(R.string.team_logo_description, match.league ?: ""),
+                        contentDescription = stringResource(
+                            R.string.team_logo_description,
+                            match.league ?: ""
+                        ),
                         modifier = Modifier
-                            .size(SIZE_24)
+                            .size(SIZE_16)
                             .clip(CircleShape),
                         contentScale = ContentScale.Crop
                     )
                     Spacer(modifier = Modifier.width(SIZE_8))
                     Text(
-                        text = "${match.league}${stringResource(R.string.league_separator)}${match.serie}",
+                        text = "${match.league} ${stringResource(R.string.league_separator)} ${match.serie}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
         }
+    }
+}
+
+@Composable
+fun DateTag(
+    modifier: Modifier = Modifier,
+    match: MatchResponseDTO
+) {
+    val color = if (match.isLive) AccentRed else TextSecondary.copy(alpha = 0.2f)
+    Box(
+        modifier = modifier
+            .background(
+                color,
+                shape = RoundedCornerShape(
+                    topStart = SIZE_0,
+                    topEnd = SIZE_8,
+                    bottomStart = SIZE_16,
+                    bottomEnd = SIZE_0
+                )
+            )
+            .padding(horizontal = SPACING_8, vertical = SPACING_6)
+    ) {
+        if (!match.isLive) {
+            Text(
+                text = match.formattedDateLabel,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        } else {
+            Text(
+                text = stringResource(R.string.live_indicator),
+                color = Color.White,
+                style = MaterialTheme.typography.labelSmall
+            )
+        }
+    }
+}
+
+@Composable
+fun TeamColumn(team: TeamDTO?, modifier: Modifier = Modifier) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.width(SIZE_64)
+    ) {
+        CustomImage(
+            imageUrl = team?.imageUrl,
+            teamName = team?.name,
+            size = SIZE_48
+        )
+
+        Spacer(modifier = Modifier.height(SIZE_8))
+
+        Text(
+            text = team?.name ?: stringResource(R.string.team_placeholder),
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
     }
 }

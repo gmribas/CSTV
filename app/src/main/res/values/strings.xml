@@ -8,15 +8,16 @@
     <string name="cstv_logo_description">CSTV Logo</string>
     
     <!-- Matches Screen -->
-    <string name="matches_title">Partidas</string>
+    <string name="matches_title">Matches</string>
     <string name="loading_matches">Loading matches...</string>
+    <string name="loading_more_matches">Loading more matches...</string>
     <string name="error_prefix">Error: </string>
     <string name="error_unknown">Unknown error</string>
     <string name="no_matches_found">No matches found</string>
     <string name="welcome_message">Welcome to CSTV</string>
     
     <!-- Match Item -->
-    <string name="live_indicator">LIVE</string>
+    <string name="live_indicator">NOW</string>
     <string name="versus_text">VS</string>
     <string name="team_placeholder">TBD</string>
     <string name="team_logo_description">%1$s logo</string>

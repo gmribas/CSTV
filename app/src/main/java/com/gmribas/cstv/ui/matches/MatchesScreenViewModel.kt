@@ -2,16 +2,17 @@ package com.gmribas.cstv.ui.matches
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.gmribas.cstv.domain.GetMatchesUseCase
-import com.gmribas.cstv.domain.UseCaseResult
+import com.gmribas.cstv.repository.dto.MatchResponseDTO
+import com.gmribas.cstv.ui.matches.model.MatchScreenEvent
 import com.gmribas.cstv.ui.matches.model.MatchesScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import com.gmribas.cstv.core.extensions.getTodayAsIsoString
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,28 +20,26 @@ class MatchesScreenViewModel @Inject constructor(
     private val getMatchesUseCase: GetMatchesUseCase
 ) : ViewModel() {
 
-    private var _state = MutableStateFlow<MatchesScreenState>(MatchesScreenState.MatchesScreenIdleState)
+    private val matchesPagingFlow: Flow<PagingData<MatchResponseDTO>> = getMatchesUseCase()
+        .cachedIn(viewModelScope)
+
+    private var _state = MutableStateFlow<MatchesScreenState>(
+        MatchesScreenState.MatchesScreenSuccessState(matchesPagingFlow)
+    )
     internal val state: StateFlow<MatchesScreenState> = _state.asStateFlow()
 
-    fun loadRecentMatches() = viewModelScope.launch {
-        try {
-            _state.value = MatchesScreenState.MatchesScreenLoadingState
-
-            val today = getTodayAsIsoString()
-
-            val result = getMatchesUseCase(beginAt = today, page = 1)
-
-            when (result) {
-                is UseCaseResult.Success -> {
-                    _state.value = MatchesScreenState.MatchesScreenSuccessState(result.data)
-                }
-
-                is UseCaseResult.Error -> {
-                    _state.value = MatchesScreenState.MatchesScreenErrorState(result.error.message)
-                }
+    internal fun onEvent(event: MatchScreenEvent) {
+        // Events can be handled for refresh, etc. if needed
+        when (event) {
+            is MatchScreenEvent.LoadRecentMatches -> {
+                // Already loading via paging flow
             }
-        } catch (e: Exception) {
-            _state.value = MatchesScreenState.MatchesScreenErrorState(e.message)
+            is MatchScreenEvent.LoadMoreMatches -> {
+                // Handled automatically by paging
+            }
+            is MatchScreenEvent.ForceRefresh -> {
+                // Could trigger refresh on paging source if needed
+            }
         }
     }
 }
