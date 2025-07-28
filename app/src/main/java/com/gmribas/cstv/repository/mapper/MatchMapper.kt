@@ -14,22 +14,22 @@ class MatchMapper(
 ) : IMapper<MatchResponse, MatchResponseDTO> {
 
     override fun toDTO(model: MatchResponse): MatchResponseDTO {
-        val teamA = model.opponents.getOrNull(0)?.opponent?.let { teamMapper.toDTO(it) }
-        val teamB = model.opponents.getOrNull(1)?.opponent?.let { teamMapper.toDTO(it) }
+        val teamA = model.opponents?.getOrNull(0)?.opponent?.let { teamMapper.toDTO(it) }
+        val teamB = model.opponents?.getOrNull(1)?.opponent?.let { teamMapper.toDTO(it) }
 
         val isLive = model.status == "running" || model.status == "live"
 
-        val leagueImageUrl = when (val imageUrl = model.league.imageUrl) {
+        val leagueImageUrl = when (val imageUrl = model.league?.imageUrl) {
             is String -> imageUrl
             else -> null
         }
 
-        val formattedDateLabel = model.beginAt.toFormattedDateLabel(context)
+        val formattedDateLabel = model.beginAt?.toFormattedDateLabel(context).orEmpty()
 
         return MatchResponseDTO(
             slug = model.slug,
-            league = model.league.name,
-            serie = model.serie.name,
+            league = model.league?.name,
+            serie = model.serie?.name,
             teamA = teamA,
             teamB = teamB,
             status = model.status,

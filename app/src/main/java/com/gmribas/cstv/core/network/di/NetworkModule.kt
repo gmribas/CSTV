@@ -10,6 +10,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.google.gson.Gson
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -18,14 +20,19 @@ object NetworkModule {
     private const val BASE_URL = "https://api.pandascore.co/"
 
     @Provides
+    @Singleton
+    fun provideGson(): Gson = Gson()
+
+    @Provides
     fun providePandascoreApi(retrofit: Retrofit) = retrofit.create(PandascoreApi::class.java)
 
     @Provides
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
+        gson: Gson
     ) = Retrofit.Builder()
         .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .baseUrl(BASE_URL)
         .build()
 

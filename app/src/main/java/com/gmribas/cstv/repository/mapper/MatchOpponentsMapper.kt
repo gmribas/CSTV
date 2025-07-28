@@ -10,7 +10,6 @@ class MatchOpponentsMapper : IMapper<MatchOpponentsResponse, MatchOpponentsRespo
 
     override fun toDTO(model: MatchOpponentsResponse): MatchOpponentsResponseDTO {
         return MatchOpponentsResponseDTO(
-            opponentType = model.opponentType,
             opponents = model.opponents.map { teamDetails ->
                 TeamDetailsDTO(
                     id = teamDetails.id,
@@ -20,11 +19,10 @@ class MatchOpponentsMapper : IMapper<MatchOpponentsResponse, MatchOpponentsRespo
                     imageUrl = teamDetails.imageUrl,
                     players = teamDetails.players?.map { player ->
                         PlayerDetailsDTO(
-                            name = player.name ?: "",
+                            name = player.name.orEmpty(),
                             firstName = player.firstName,
                             lastName = player.lastName,
-                            imageUrl = player.imageUrl,
-                            nationality = player.nationality
+                            imageUrl = player.imageUrl
                         )
                     } ?: emptyList()
                 )

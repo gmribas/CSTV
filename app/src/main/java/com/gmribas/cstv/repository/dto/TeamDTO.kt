@@ -1,8 +1,8 @@
 package com.gmribas.cstv.repository.dto
 
 data class TeamDTO(
-    val id: Long,
-    val name: String,
+    val id: Long?,
+    val name: String?,
     val slug: String?,
     val acronym: String?,
     val imageUrl: String?,

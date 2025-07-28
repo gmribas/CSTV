@@ -27,11 +27,6 @@ interface PandascoreApi {
         @Query("per_page") perPage: Int = 50
     ): List<MatchResponse>
 
-    @GET("matches/{match_id_or_slug}")
-    suspend fun getMatch(
-        @Path(value = "match_id_or_slug", encoded = true) idOrSlug: String,
-    ): MatchResponse
-
     @GET("matches/{match_id_or_slug}/opponents")
     suspend fun getMatchOpponents(
         @Path(value = "match_id_or_slug", encoded = true) idOrSlug: String,

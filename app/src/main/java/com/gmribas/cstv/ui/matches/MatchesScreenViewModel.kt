@@ -29,16 +29,12 @@ class MatchesScreenViewModel @Inject constructor(
     internal val state: StateFlow<MatchesScreenState> = _state.asStateFlow()
 
     internal fun onEvent(event: MatchScreenEvent) {
-        // Events can be handled for refresh, etc. if needed
         when (event) {
             is MatchScreenEvent.LoadRecentMatches -> {
-                // Already loading via paging flow
             }
             is MatchScreenEvent.LoadMoreMatches -> {
-                // Handled automatically by paging
             }
             is MatchScreenEvent.ForceRefresh -> {
-                // Could trigger refresh on paging source if needed
             }
         }
     }

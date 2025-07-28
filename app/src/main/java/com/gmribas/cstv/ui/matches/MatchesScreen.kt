@@ -103,7 +103,6 @@ fun MatchesScreen(
                         }
                     }
                     
-                    // Handle loading states
                     matchesPagingItems.apply {
                         when {
                             loadState.refresh is LoadState.Loading -> {

@@ -2,4 +2,12 @@
 <resources>
 
     <style name="Theme.CSTV" parent="android:Theme.Material.Light.NoActionBar" />
+    
+    <style name="Theme.CSTV.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_fuze_logo</item>
+        <item name="windowSplashScreenAnimationDuration">2000</item>
+        <item name="postSplashScreenTheme">@style/Theme.CSTV</item>
+    </style>
+
 </resources>

@@ -14,8 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,7 +23,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,51 +33,39 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import coil3.compose.AsyncImage
 import com.gmribas.cstv.R
-import com.gmribas.cstv.repository.dto.MatchDetailsResponseDTO
 import com.gmribas.cstv.repository.dto.MatchOpponentsResponseDTO
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
-import com.gmribas.cstv.repository.dto.PlayerDetailsDTO
-import com.gmribas.cstv.repository.dto.TeamDetailsDTO
 import com.gmribas.cstv.repository.dto.TeamDTO
-import com.gmribas.cstv.repository.dto.LeagueDetailsDTO
-import com.gmribas.cstv.repository.dto.SerieDetailsDTO
-import com.gmribas.cstv.repository.dto.TournamentDetailsDTO
-import com.gmribas.cstv.repository.dto.PlayerDTO
 import com.gmribas.cstv.ui.common.ErrorContent
 import com.gmribas.cstv.ui.common.LoadingContent
 import com.gmribas.cstv.ui.matchdetails.model.MatchDetailsScreenState
+import com.gmribas.cstv.ui.matchdetails.model.MatchDetailsScreenEvent
 import com.gmribas.cstv.ui.matchdetails.components.TeamAPlayerItem
 import com.gmribas.cstv.ui.matchdetails.components.TeamBPlayerItem
 import com.gmribas.cstv.ui.matches.components.TeamColumn
 import com.gmribas.cstv.ui.theme.SPACING_8
 import com.gmribas.cstv.ui.theme.SPACING_16
-import com.google.gson.Gson
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MatchDetailsScreen(
     slug: String,
     matchDataJson: String? = null,
-    onBackClick: () -> Unit = {},
-    viewModel: MatchDetailsScreenViewModel = hiltViewModel(),
+    state: MatchDetailsScreenState,
+    onEvent: (MatchDetailsScreenEvent) -> Unit,
+    onBackClick: () -> Unit,
 ) {
-    val state by viewModel.state.collectAsState()
-    
     LaunchedEffect(matchDataJson) {
         if (matchDataJson != null) {
-            viewModel.loadMatchOpponents(matchDataJson, slug)
+            onEvent(MatchDetailsScreenEvent.LoadMatchOpponents(matchDataJson, slug))
         }
     }
-    
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        // Top App Bar with league + serie name
         var title by remember {
             mutableStateOf("")
         }
@@ -148,8 +133,8 @@ private fun MatchDetailsContent(
         }
 
         if (opponentsResponse != null) {
-            val playersA = opponentsResponse.opponents.getOrNull(0)?.players ?: emptyList()
-            val playersB = opponentsResponse.opponents.getOrNull(1)?.players ?: emptyList()
+            val playersA = opponentsResponse.opponents?.getOrNull(0)?.players ?: emptyList()
+            val playersB = opponentsResponse.opponents?.getOrNull(1)?.players ?: emptyList()
             val maxPlayers = maxOf(playersA.size, playersB.size)
             
             items(maxPlayers) { i ->
@@ -188,7 +173,6 @@ private fun MatchHeaderCard(matchDetails: MatchResponseDTO) {
             .padding(SPACING_16),
             verticalArrangement = Arrangement.spacedBy(SPACING_8)
         ) {
-            // Teams and Date
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
@@ -205,9 +189,8 @@ private fun MatchHeaderCard(matchDetails: MatchResponseDTO) {
 
             Spacer(modifier = Modifier.height(SPACING_8))
 
-            // Match time and status
             Text(
-                text = matchDetails.formattedDateLabel,
+                text = matchDetails.formattedDateLabel.orEmpty(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center,

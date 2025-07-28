@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <item
+        android:gravity="center">
         <bitmap
             android:width="20dp"
             android:src="@drawable/ic_fuze_logo"
-            android:gravity="center" />
+            android:gravity="center"
+            android:tint="@android:color/white" />
     </item>
 </layer-list>

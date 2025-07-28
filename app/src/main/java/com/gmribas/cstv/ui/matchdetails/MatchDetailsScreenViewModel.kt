@@ -6,6 +6,7 @@ import com.gmribas.cstv.domain.GetMatchOpponentsUseCase
 import com.gmribas.cstv.domain.UseCaseResult
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
 import com.gmribas.cstv.ui.matchdetails.model.MatchDetailsScreenState
+import com.gmribas.cstv.ui.matchdetails.model.MatchDetailsScreenEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,20 +17,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MatchDetailsScreenViewModel @Inject constructor(
-    private val getMatchOpponentsUseCase: GetMatchOpponentsUseCase
+    private val getMatchOpponentsUseCase: GetMatchOpponentsUseCase,
+    private val gson: Gson
 ) : ViewModel() {
 
     private var _state = MutableStateFlow<MatchDetailsScreenState>(MatchDetailsScreenState.MatchDetailsScreenIdleState)
     internal val state: StateFlow<MatchDetailsScreenState> = _state.asStateFlow()
 
-    fun loadMatchOpponents(
+    internal fun onEvent(event: MatchDetailsScreenEvent) {
+        when (event) {
+            is MatchDetailsScreenEvent.LoadMatchOpponents -> {
+                loadMatchOpponents(event.matchDataJson, event.slug)
+            }
+        }
+    }
+
+    private fun loadMatchOpponents(
         matchDataJson: String,
         slug: String
         ) = viewModelScope.launch {
         try {
             _state.value = MatchDetailsScreenState.MatchDetailsScreenLoadingState
 
-            val gson = Gson()
             val match = gson.fromJson(matchDataJson, MatchResponseDTO::class.java)
             val opponentsResult = getMatchOpponentsUseCase(slug)
 

@@ -75,16 +75,13 @@ fun MatchItem(
                 match = match
             )
 
-            // Teams row in center
             Row(
                 modifier = Modifier
                     .align(Alignment.Center),
-                // horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TeamColumn(
                     team = match.teamA,
-                    // modifier = Modifier.weight(1f)
                 )
 
                 Text(
@@ -96,7 +93,6 @@ fun MatchItem(
 
                 TeamColumn(
                     team = match.teamB,
-                    // modifier = Modifier.weight(1f)
                 )
             }
 
@@ -105,7 +101,6 @@ fun MatchItem(
                     .fillMaxWidth()
                     .align(Alignment.BottomStart)
             ) {
-                // Divider at bottom
                 HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -113,7 +108,6 @@ fun MatchItem(
                     color = MaterialTheme.colorScheme.outlineVariant
                 )
 
-                // League info row at bottom
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -126,7 +120,7 @@ fun MatchItem(
                             .build(),
                         contentDescription = stringResource(
                             R.string.team_logo_description,
-                            match.league ?: ""
+                            match.league.orEmpty()
                         ),
                         modifier = Modifier
                             .size(SIZE_16)
@@ -152,7 +146,7 @@ fun DateTag(
     modifier: Modifier = Modifier,
     match: MatchResponseDTO
 ) {
-    val color = if (match.isLive) AccentRed else TextSecondary.copy(alpha = 0.2f)
+    val color = if (match.isLive == true) AccentRed else TextSecondary.copy(alpha = 0.2f)
     Box(
         modifier = modifier
             .background(
@@ -166,9 +160,9 @@ fun DateTag(
             )
             .padding(horizontal = SPACING_8, vertical = SPACING_6)
     ) {
-        if (!match.isLive) {
+        if (match.isLive != true) {
             Text(
-                text = match.formattedDateLabel,
+                text = match.formattedDateLabel.orEmpty(),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

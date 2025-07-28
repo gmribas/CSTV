@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class TeamDetailsResponse(
     @SerializedName("id")
-    val id: Long,
+    val id: Long?,
     @SerializedName("acronym")
     val acronym: String?,
     @SerializedName("image_url")
@@ -12,7 +12,7 @@ data class TeamDetailsResponse(
     @SerializedName("location")
     val location: String?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("players")
     val players: List<TeamPlayer>?,
     @SerializedName("slug")

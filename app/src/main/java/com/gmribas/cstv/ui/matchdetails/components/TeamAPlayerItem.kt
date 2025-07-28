@@ -30,7 +30,6 @@ fun TeamAPlayerItem(
     player: PlayerDetailsDTO?
 ) {
     if (player == null) {
-        // Empty placeholder for missing player
         Box(
             modifier = modifier
                 .height(SIZE_48)
@@ -58,9 +57,8 @@ fun TeamAPlayerItem(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // Nickname (center)
                 Text(
-                    text = player.name,
+                    text = player.name.orEmpty(),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold,
@@ -69,11 +67,10 @@ fun TeamAPlayerItem(
                 
                 Spacer(modifier = Modifier.height(SPACING_4))
                 
-                // Player name (below nickname)
                 Text(
                     text = player.firstName?.let { first ->
                         player.lastName?.let { last -> "$first $last" } ?: first
-                    } ?: player.name,
+                    } ?: player.name.orEmpty(),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center

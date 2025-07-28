@@ -26,10 +26,6 @@ class MatchDataSource(
         }.thenBy { it.beginAt })
     }
 
-    override suspend fun getMatch(slug: String): MatchResponse {
-        return api.getMatch(slug)
-    }
-    
     override suspend fun getMatchOpponents(slug: String): MatchOpponentsResponse {
         return api.getMatchOpponents(slug)
     }
