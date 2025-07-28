@@ -5,14 +5,17 @@ import com.gmribas.cstv.core.IMapper
 import com.gmribas.cstv.data.datasource.match.IMatchDataSource
 import com.gmribas.cstv.data.datasource.team.ITeamDataSource
 import com.gmribas.cstv.data.model.MatchDetailsResponse
+import com.gmribas.cstv.data.model.MatchOpponentsResponse
 import com.gmribas.cstv.data.model.MatchResponse
 import com.gmribas.cstv.data.model.Player
 import com.gmribas.cstv.data.model.Team
 import com.gmribas.cstv.repository.dto.MatchDetailsResponseDTO
+import com.gmribas.cstv.repository.dto.MatchOpponentsResponseDTO
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
 import com.gmribas.cstv.repository.dto.TeamDTO
 import com.gmribas.cstv.repository.mapper.MatchDetailsMapper
 import com.gmribas.cstv.repository.mapper.MatchMapper
+import com.gmribas.cstv.repository.mapper.MatchOpponentsMapper
 import com.gmribas.cstv.repository.mapper.TeamMapper
 import com.gmribas.cstv.repository.mapper.TeamToTeamDTOMapper
 import com.gmribas.cstv.repository.match.IMatchRepository
@@ -46,12 +49,16 @@ object RepositoryModule {
     ): IMapper<MatchDetailsResponse, MatchDetailsResponseDTO> = MatchDetailsMapper(context)
 
     @Provides
+    fun provideMatchOpponentsMapper(): IMapper<MatchOpponentsResponse, MatchOpponentsResponseDTO> = MatchOpponentsMapper()
+
+    @Provides
     fun provideMatchRepository(
         datasource: IMatchDataSource,
         teamDataSource: ITeamDataSource,
         mapper: @JvmSuppressWildcards IMapper<MatchResponse, MatchResponseDTO>,
-        matchDetailsMapper: @JvmSuppressWildcards IMapper<MatchDetailsResponse, MatchDetailsResponseDTO>
+        matchDetailsMapper: @JvmSuppressWildcards IMapper<MatchDetailsResponse, MatchDetailsResponseDTO>,
+        matchOpponentsMapper: @JvmSuppressWildcards IMapper<MatchOpponentsResponse, MatchOpponentsResponseDTO>
     ): IMatchRepository {
-        return MatchRepository(datasource, teamDataSource, mapper, matchDetailsMapper)
+        return MatchRepository(datasource, teamDataSource, mapper, matchDetailsMapper, matchOpponentsMapper)
     }
 }

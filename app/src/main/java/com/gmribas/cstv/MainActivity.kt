@@ -25,7 +25,8 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     CstvNavigation(
                         navController = navController,
-                        onFinish = { finish() }
+                        onFinish = { finish() },
+                        modifier = Modifier.padding(innerPadding)
                     )
                 }
             }

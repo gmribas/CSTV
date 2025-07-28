@@ -10,16 +10,19 @@ import com.gmribas.cstv.core.IMapper
 import com.gmribas.cstv.data.datasource.match.IMatchDataSource
 import com.gmribas.cstv.data.datasource.team.ITeamDataSource
 import com.gmribas.cstv.data.model.MatchDetailsResponse
+import com.gmribas.cstv.data.model.MatchOpponentsResponse
 import com.gmribas.cstv.data.model.MatchResponse
 import com.gmribas.cstv.data.paging.MatchesPagingSource
 import com.gmribas.cstv.repository.dto.MatchDetailsResponseDTO
+import com.gmribas.cstv.repository.dto.MatchOpponentsResponseDTO
 import com.gmribas.cstv.repository.dto.MatchResponseDTO
 
 class MatchRepository(
     private val datasource: IMatchDataSource,
     private val teamDataSource: ITeamDataSource,
     private val mapper: IMapper<MatchResponse, MatchResponseDTO>,
-    private val matchDetailsMapper: IMapper<MatchDetailsResponse, MatchDetailsResponseDTO>
+    private val matchDetailsMapper: IMapper<MatchDetailsResponse, MatchDetailsResponseDTO>,
+    private val matchOpponentsMapper: IMapper<MatchOpponentsResponse, MatchOpponentsResponseDTO>
 ) : IMatchRepository {
 
     override fun getMatchesPagingFlow(): Flow<PagingData<MatchResponseDTO>> {
@@ -72,5 +75,10 @@ class MatchRepository(
             println("Failed to fetch match details for slug '$slug': ${e.message}")
             throw e
         }
+    }
+    
+    override suspend fun getMatchOpponents(slug: String): MatchOpponentsResponseDTO {
+        val response = datasource.getMatchOpponents(slug)
+        return matchOpponentsMapper.toDTO(response)
     }
 }

@@ -41,7 +41,7 @@ android {
                 "PANDASCORE_KEY",
                 "\"${properties.getProperty("PANDASCORE_KEY")}\""
             )
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

@@ -2,6 +2,7 @@ package com.gmribas.cstv.data.datasource.match
 
 import com.gmribas.cstv.data.api.PandascoreApi
 import com.gmribas.cstv.data.model.MatchResponse
+import com.gmribas.cstv.data.model.MatchOpponentsResponse
 
 class MatchDataSource(
     private val api: PandascoreApi
@@ -27,5 +28,9 @@ class MatchDataSource(
 
     override suspend fun getMatch(slug: String): MatchResponse {
         return api.getMatch(slug)
+    }
+    
+    override suspend fun getMatchOpponents(slug: String): MatchOpponentsResponse {
+        return api.getMatchOpponents(slug)
     }
 }

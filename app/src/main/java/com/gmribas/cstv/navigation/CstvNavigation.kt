@@ -20,11 +20,13 @@ import com.gmribas.cstv.repository.dto.MatchResponseDTO
 @Composable
 fun CstvNavigation(
     navController: NavHostController = rememberNavController(),
-    onFinish: () -> Unit = {}
+    onFinish: () -> Unit = {},
+    modifier: androidx.compose.ui.Modifier = androidx.compose.ui.Modifier
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Splash.route
+        startDestination = Screen.Splash.route,
+        modifier = modifier
     ) {
         composable(route = Screen.Splash.route) {
             SplashScreen(

@@ -16,5 +16,7 @@ data class TeamDetailsResponse(
     @SerializedName("players")
     val players: List<TeamPlayer>?,
     @SerializedName("slug")
-    val slug: String?
+    val slug: String?,
+    @SerializedName("modified_at")
+    val modifiedAt: String?
 )

@@ -1,10 +1,14 @@
 package com.gmribas.cstv.ui.matchdetails.model
 
-import com.gmribas.cstv.repository.dto.MatchDetailsResponseDTO
+import com.gmribas.cstv.repository.dto.MatchOpponentsResponseDTO
+import com.gmribas.cstv.repository.dto.MatchResponseDTO
 
 sealed class MatchDetailsScreenState {
     object MatchDetailsScreenIdleState : MatchDetailsScreenState()
     object MatchDetailsScreenLoadingState : MatchDetailsScreenState()
-    data class MatchDetailsScreenSuccessState(val matchDetails: MatchDetailsResponseDTO) : MatchDetailsScreenState()
+    data class MatchDetailsScreenSuccessState(
+        val matchDetails: MatchResponseDTO,
+        val opponentsResponse: MatchOpponentsResponseDTO?
+        ) : MatchDetailsScreenState()
     data class MatchDetailsScreenErrorState(val error: String?) : MatchDetailsScreenState()
 }
